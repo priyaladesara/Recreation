@@ -5,6 +5,10 @@ export type Product = {
   category: string;
   tagline: string;
   description: string;
+  /**
+   * Product photo shown in a 4:3 frame with object-contain. To use a real photo, drop it in
+   * public/products/ (transparent PNG/WebP, ~1200 × 900 works best) and point this path at it.
+   */
   image: string;
   specs: { label: string; value: string }[];
   features: string[];
@@ -19,7 +23,7 @@ export const products: Product[] = [
     tagline: "Reliable protection for high voltage networks",
     description:
       "We supply and install High Voltage Vacuum Circuit Breakers for transmission and sub-transmission networks, backed by our licensed electrical contracting team for safe, compliant commissioning.",
-    image: "/products/hv-vcb.svg",
+    image: "/products/hv-vcb.png",
     specs: [
       { label: "Rated Voltage", value: "Up to 145 kV" },
       { label: "Rated Current", value: "630 – 4000 A" },
@@ -42,7 +46,7 @@ export const products: Product[] = [
     tagline: "Reliable switching for distribution networks",
     description:
       "Compact and robust Medium Voltage Vacuum Circuit Breakers supplied and installed for distribution substations that demand safe, fast, and reliable switching across industrial and utility applications.",
-    image: "/products/mv-vcb.svg",
+    image: "/products/mv-vcb.png",
     specs: [
       { label: "Rated Voltage", value: "3.6 – 36 kV" },
       { label: "Rated Current", value: "630 – 3150 A" },
@@ -65,7 +69,7 @@ export const products: Product[] = [
     tagline: "Compact, sealed, and maintenance-free",
     description:
       "SF6 and air-insulated Ring Main Units supplied and installed for safe, reliable, and compact switching on secondary distribution networks, with minimal maintenance requirements.",
-    image: "/products/rmu.svg",
+    image: "/products/rmu.png",
     specs: [
       { label: "Rated Voltage", value: "12 – 36 kV" },
       { label: "Rated Current", value: "630 – 1250 A" },
@@ -88,7 +92,7 @@ export const products: Product[] = [
     tagline: "Efficient power conversion, supplied and installed",
     description:
       "We supply power and distribution transformers for utility, industrial, and commercial applications, and handle installation and commissioning through our licensed contracting team.",
-    image: "/products/transformer.svg",
+    image: "/products/transformer.png",
     specs: [
       { label: "Rating", value: "25 kVA – 100 MVA" },
       { label: "Voltage Class", value: "Up to 220 kV" },
@@ -111,7 +115,7 @@ export const products: Product[] = [
     tagline: "Packaged substation solutions, ready to install",
     description:
       "Compact, factory-assembled substation packages combining transformer, switchgear, and protection in a single enclosure — supplied and installed for industrial, commercial, and infrastructure projects where space is limited.",
-    image: "/products/compact-substation.svg",
+    image: "/products/compact-substation.png",
     specs: [
       { label: "Rated Voltage", value: "11 – 33 kV" },
       { label: "Transformer Rating", value: "100 kVA – 2500 kVA" },
@@ -134,7 +138,7 @@ export const products: Product[] = [
     tagline: "Consistent voltage, uninterrupted operation",
     description:
       "Automatic voltage stabilisers supplied and installed to protect sensitive equipment from voltage fluctuations, delivering precise regulation for industrial, commercial, and critical infrastructure loads.",
-    image: "/products/stabiliser.svg",
+    image: "/products/stabiliser.png",
     specs: [
       { label: "Capacity", value: "1 kVA – 5000 kVA" },
       { label: "Input Range", value: "±20% to ±40%" },
@@ -157,7 +161,7 @@ export const products: Product[] = [
     tagline: "Zero-downtime backup power",
     description:
       "UPS systems supplied and installed to provide seamless backup power for mission-critical operations, from commercial buildings to industrial control systems, ensuring continuity during grid disturbances.",
-    image: "/products/ups.svg",
+    image: "/products/ups.png",
     specs: [
       { label: "Capacity", value: "1 kVA – 800 kVA" },
       { label: "Topology", value: "Online Double Conversion" },

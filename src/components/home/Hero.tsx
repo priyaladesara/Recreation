@@ -1,104 +1,90 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import dynamic from "next/dynamic";
+import { ArrowRight, BadgeCheck, CalendarCheck, MessageCircle, ShieldCheck } from "lucide-react";
+import { whatsappQuoteUrl } from "@/lib/whatsapp";
+
+// three.js is client-only and heavy: load it after first paint, holding its space meanwhile.
+const TransformerViewer = dynamic(() => import("./TransformerViewer"), {
+  ssr: false,
+  loading: () => (
+    <div className="relative">
+      <div className="flex aspect-square w-full items-center justify-center sm:aspect-[5/4] lg:aspect-square">
+        <div className="h-2/3 w-2/3 animate-pulse rounded-full bg-[radial-gradient(circle,rgba(46,168,240,0.12),transparent_65%)]" />
+      </div>
+      <div className="mt-4 h-11" />
+      <div className="mt-3 min-h-[92px]" />
+    </div>
+  ),
+});
+
+const credentials = [
+  { icon: ShieldCheck, label: "Govt. licensed contractor" },
+  { icon: BadgeCheck, label: "Authorised HUCEEN dealer" },
+  { icon: CalendarCheck, label: "Serving since 2010" },
+];
 
 export default function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-
   return (
-    <section
-      ref={ref}
-      className="relative flex h-[100svh] min-h-[640px] items-center overflow-hidden bg-background"
-    >
-      <div className="grid-overlay absolute inset-0" />
+    <section className="relative overflow-hidden">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-32 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pt-36">
+        <div className="lg:col-span-6">
+          {/* Entrance animations are pure CSS (.rise) so they play at first paint, without waiting
+              for JavaScript to load and hydrate. */}
+          <p className="rise eyebrow flex items-center gap-3">
+            <span className="relative flex h-2 w-2" aria-hidden>
+              <span className="absolute inline-flex h-full w-full rounded-full bg-green animate-[ping-soft_2s_ease-out_infinite]" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-green" />
+            </span>
+            Valsad, Gujarat · Est. 2010
+          </p>
 
-      <motion.div
-        style={{ scale }}
-        className="pointer-events-none absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-green/25 blur-[120px]"
-      />
-      <motion.div
-        style={{ scale }}
-        className="pointer-events-none absolute -right-32 bottom-0 h-[480px] w-[480px] rounded-full bg-blue/25 blur-[130px]"
-      />
+          <h1 className="font-display mt-6 text-[clamp(2.5rem,5vw,4.25rem)] font-bold uppercase leading-[0.98] tracking-[-0.01em] text-foreground">
+            <span className="rise block" style={{ "--d": "0.06s" } as React.CSSProperties}>
+              Electrical Contractor &amp;
+            </span>
+            <span className="rise block" style={{ "--d": "0.14s" } as React.CSSProperties}>
+              <span className="text-gradient">Power Equipment</span>
+            </span>
+            <span className="rise block" style={{ "--d": "0.22s" } as React.CSSProperties}>
+              Solutions
+            </span>
+          </h1>
 
-      <motion.div
-        style={{ y, opacity }}
-        className="relative z-10 mx-auto max-w-7xl px-6 pt-24 lg:px-10"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-4 py-1.5 text-xs font-medium text-muted backdrop-blur"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
-          Government Licensed Electrical Contractor
-        </motion.div>
+          <p className="rise mt-7 max-w-xl text-lg leading-relaxed text-muted" style={{ "--d": "0.3s" } as React.CSSProperties}>
+            Recreation is a government licensed electrical contractor and
+            supplier of RMU, VCB, Transformer, and Compact Substation
+            equipment — and an authorised dealer of HUCEEN. From
+            specification to installation and after-sales support, we keep
+            your power infrastructure running.
+          </p>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display max-w-4xl text-5xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl"
-        >
-          Powering your grid with
-          <span className="text-gradient"> trusted switchgear </span>
-          solutions
-        </motion.h1>
+          <div className="rise mt-9 flex flex-wrap items-center gap-3" style={{ "--d": "0.38s" } as React.CSSProperties}>
+            <Link href="/products" className="btn btn-primary chamfer group">
+              Explore products
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </Link>
+            <a href={whatsappQuoteUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+              <MessageCircle className="h-4 w-4 text-green" aria-hidden />
+              Get a quote on WhatsApp
+            </a>
+          </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-6 max-w-xl text-lg leading-relaxed text-muted"
-        >
-          Recreation is a government licensed electrical contractor and
-          supplier of RMU, VCB, Transformer, and Compact Substation
-          equipment — and an authorised dealer of HUCEEN. From
-          specification to installation and after-sales support, we keep
-          your power infrastructure running.
-        </motion.p>
+          <ul className="rise mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6" style={{ "--d": "0.46s" } as React.CSSProperties}>
+            {credentials.map((c) => (
+              <li key={c.label} className="flex items-center gap-2 text-sm text-foreground/90">
+                <c.icon className="h-4 w-4 text-green" aria-hidden />
+                {c.label}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <Link
-            href="/products"
-            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-green to-blue px-7 py-3.5 text-sm font-semibold text-background transition-transform hover:scale-105"
-          >
-            Explore Products
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 rounded-full border border-border px-7 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-green hover:text-green"
-          >
-            Talk to an Engineer
-          </Link>
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-muted"
-      >
-        <ChevronDown className="h-6 w-6" />
-      </motion.div>
+        <div className="lg:col-span-6">
+          <TransformerViewer />
+        </div>
+      </div>
     </section>
   );
 }

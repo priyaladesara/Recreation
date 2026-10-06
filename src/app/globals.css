@@ -1,17 +1,25 @@
 @import "tailwindcss";
 
+/*
+ * "Control room" dark theme — graphite surfaces, brand lime for action, electric blue for data,
+ * amber reserved for live/status. Contrast (checked): fg/bg 17.1, muted/bg 6.9, muted/surface-2 6.0,
+ * lime/bg 9.7, blue/bg 7.6, amber/bg 10.7, ink-on-lime 9.7.
+ */
 :root {
-  --background: #05070d;
-  --background-alt: #090d18;
-  --surface: #0d1220;
-  --surface-2: #121a2c;
-  --border: #1c2740;
-  --foreground: #eef2fb;
-  --muted: #8b95ad;
-  --green: #6ea92f;
-  --green-dim: #4d7a1f;
-  --blue: #009de1;
+  --background: #07090c;
+  --background-alt: #0b0e13;
+  --surface: #0f1319;
+  --surface-2: #151a22;
+  --border: #222a35;
+  --border-strong: #313b49;
+  --foreground: #e9eef4;
+  --muted: #8d99a8;
+  --green: #8cc63f; /* brand lime */
+  --green-dim: #5f8f26;
+  --blue: #2ea8f0;
   --blue-dim: #33446f;
+  --amber: #f2b33d;
+  --chamfer: 14px;
 }
 
 @theme inline {
@@ -20,14 +28,17 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-green: var(--green);
   --color-green-dim: var(--green-dim);
   --color-blue: var(--blue);
   --color-blue-dim: var(--blue-dim);
+  --color-amber: var(--amber);
   --font-sans: var(--font-inter);
-  --font-display: var(--font-space-grotesk);
+  --font-display: var(--font-chakra);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 * {
@@ -36,19 +47,55 @@
 
 html {
   background: var(--background);
+  color-scheme: dark;
   scroll-behavior: auto;
 }
 
+/* Transparent so the fixed glow layer (body::before, z -1) shows; html carries the base colour. */
 body {
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
+/* Two faint brand glows fixed to the viewport. A fixed layer of its own (rather than
+   background-attachment: fixed) is composited once, so scrolling never repaints it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 700px at 85% -10%, rgba(46, 168, 240, 0.08), transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, rgba(140, 198, 63, 0.06), transparent 60%);
+}
+
+/* Hero entrance: CSS-only, so it starts at first paint instead of after hydration. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
 ::selection {
   background: var(--green);
-  color: #04110b;
+  color: var(--background);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
 }
 
 ::-webkit-scrollbar {
@@ -58,45 +105,139 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--green), var(--blue));
+  background: var(--border-strong);
   border-radius: 999px;
 }
 
-.text-gradient {
-  background: linear-gradient(90deg, var(--green), var(--blue));
+.font-mono-hud {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+/* Accent text used for highlighted words in headings. */
+.text-gradient,
+.text-gradient-anim {
+  background: linear-gradient(90deg, var(--green), #b7e07a 45%, var(--blue));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.border-gradient {
-  border-image: linear-gradient(90deg, var(--green), var(--blue)) 1;
+/* Angled-corner industrial shape (top-left + bottom-right). */
+.chamfer {
+  clip-path: polygon(
+    var(--chamfer) 0,
+    100% 0,
+    100% calc(100% - var(--chamfer)),
+    calc(100% - var(--chamfer)) 100%,
+    0 100%,
+    0 var(--chamfer)
+  );
+}
+.chamfer-sm {
+  --chamfer: 9px;
 }
 
-.grid-overlay {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.glow-green {
-  box-shadow: 0 0 40px -8px rgba(110, 169, 47, 0.45);
-}
-
-.glow-blue {
-  box-shadow: 0 0 40px -8px rgba(0, 157, 225, 0.45);
-}
-
-.noise {
-  position: relative;
-}
-
-.noise::after {
+/* HUD corner brackets (top-left + bottom-right). Drawn with pseudo-elements so the element's own
+   background stays free; needs a positioned element. */
+.brackets::before,
+.brackets::after {
   content: "";
   position: absolute;
-  inset: 0;
+  z-index: 2;
+  width: 14px;
+  height: 14px;
   pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.brackets::before {
+  top: 0;
+  left: 0;
+  border-top: 1.5px solid var(--green);
+  border-left: 1.5px solid var(--green);
+}
+.brackets::after {
+  right: 0;
+  bottom: 0;
+  border-right: 1.5px solid var(--green);
+  border-bottom: 1.5px solid var(--green);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@layer components {
+  /* Buttons: chamfered; primary is brand lime, secondary is an outlined panel. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      filter 0.2s,
+      transform 0.15s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    background: var(--green);
+    color: var(--background);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.1);
+  }
+  .btn-secondary {
+    background:
+      linear-gradient(var(--surface), var(--surface)) padding-box,
+      var(--border-strong);
+    border: 1px solid transparent;
+    color: var(--foreground);
+  }
+  .btn-secondary:hover {
+    background:
+      linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+      var(--green);
+  }
+
+  /* Section eyebrow label. */
+  .eyebrow {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

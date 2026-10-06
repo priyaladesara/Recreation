@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
-import { StaggerGroup, StaggerItem } from "@/components/ui/StaggerReveal";
+import Panel from "@/components/ui/Panel";
 import Credentials from "@/components/home/Credentials";
 import CtaBanner from "@/components/home/CtaBanner";
+import PageHeader from "@/components/layout/PageHeader";
 import { Target, Eye, HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -40,78 +41,53 @@ const timeline = [
 export default function AboutPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-background pb-20 pt-40">
-        <div className="grid-overlay absolute inset-0 opacity-60" />
-        <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-10">
-          <Reveal>
-            <span className="text-xs font-semibold uppercase tracking-widest text-green">
-              About Recreation
-            </span>
-            <h1 className="font-display mt-4 text-5xl font-semibold tracking-tight text-foreground sm:text-6xl">
-              A licensed contractor
-              <span className="text-gradient"> you can rely on</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Founded in 2010 by Ritesh Patel, Recreation is a government
-              licensed electrical contractor and supplier of RMU, VCB,
-              Transformer, and Compact Substation equipment — and an
-              authorised dealer of HUCEEN, based in Valsad, Gujarat.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="About Recreation"
+        title={
+          <>
+            A licensed contractor <span className="text-gradient">you can rely on</span>
+          </>
+        }
+        intro="Founded in 2010 by Ritesh Patel, Recreation is a government licensed electrical contractor and supplier of RMU, VCB, Transformer, and Compact Substation equipment — and an authorised dealer of HUCEEN, based in Valsad, Gujarat."
+      />
 
       <Credentials />
 
-      <section className="relative bg-background-alt py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <StaggerGroup className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            {values.map((value) => (
-              <StaggerItem
-                key={value.title}
-                className="rounded-2xl border border-border bg-background p-8"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-green/20 to-blue/20">
-                  <value.icon className="h-6 w-6 text-blue" strokeWidth={1.75} />
-                </div>
-                <h3 className="font-display mt-5 text-xl font-semibold text-foreground">
-                  {value.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {value.desc}
-                </p>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
+      <section className="py-16">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-6 lg:grid-cols-3 lg:px-10">
+          {values.map((value, i) => (
+            <Reveal key={value.title} delay={i * 0.06}>
+              <Panel interactive className="group h-full" innerClassName="p-8">
+                <span className="chamfer chamfer-sm flex h-12 w-12 items-center justify-center bg-surface-2 text-green transition-colors group-hover:bg-green group-hover:text-background">
+                  <value.icon className="h-6 w-6" strokeWidth={1.6} aria-hidden />
+                </span>
+                <h2 className="font-display mt-6 text-xl font-semibold text-foreground">{value.title}</h2>
+                <p className="mt-3 leading-relaxed text-muted">{value.desc}</p>
+              </Panel>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      <section className="relative bg-background py-28">
-        <div className="mx-auto max-w-4xl px-6 lg:px-10">
-          <Reveal>
-            <span className="text-xs font-semibold uppercase tracking-widest text-blue">
-              What We Do
-            </span>
-            <h2 className="font-display mt-3 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Licensed, authorised, and equipped to deliver
+      <section className="py-20">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-12 lg:px-10">
+          <div className="lg:col-span-5">
+            <p className="eyebrow">What we do</p>
+            <h2 className="font-display mt-4 text-[clamp(2.25rem,4.5vw,3.5rem)] font-bold uppercase leading-[1.02] text-foreground">
+              Licensed, authorised, and <span className="text-gradient">equipped to deliver</span>
             </h2>
-          </Reveal>
-
-          <div className="relative mt-16 space-y-12 border-l border-border pl-10">
+          </div>
+          <ol className="relative border-l border-border lg:col-span-7">
             {timeline.map((item, i) => (
-              <Reveal key={item.year} delay={i * 0.08}>
-                <div className="relative">
-                  <span className="absolute -left-[45px] top-1 h-3 w-3 rounded-full bg-gradient-to-br from-green to-blue" />
-                  <h3 className="font-display text-xl font-semibold text-foreground">
-                    {item.year}
-                  </h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-                    {item.desc}
-                  </p>
-                </div>
+              <Reveal key={item.year} delay={i * 0.06}>
+                <li className="relative pb-10 pl-9 last:pb-0">
+                  <span className="absolute -left-[7px] top-1.5 h-3.5 w-3.5 border-2 border-background bg-green" aria-hidden />
+                  <h3 className="font-display text-lg font-semibold text-foreground">{item.year}</h3>
+                  <p className="mt-2 max-w-xl leading-relaxed text-muted">{item.desc}</p>
+                </li>
               </Reveal>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
