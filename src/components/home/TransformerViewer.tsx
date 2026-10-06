@@ -650,7 +650,7 @@ export default function TransformerViewer() {
               exit={{ opacity: 0 }}
               className="chamfer bg-surface-2/60 p-4 text-sm text-muted"
             >
-              Select a part above — or tap a glowing point on the model — to see what it does.
+              Select a part above, or tap a glowing point on the model, to see what it does.
             </motion.p>
           )}
         </AnimatePresence>

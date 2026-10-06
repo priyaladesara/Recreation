@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { products } from "@/lib/products";
+import { ADDRESS_LINES, MAPS_URL } from "@/lib/company";
 
 export default function Footer() {
   return (
@@ -14,7 +15,7 @@ export default function Footer() {
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
               Government licensed electrical contractor and supplier of RMU,
-              VCB, Transformer & Compact Substation equipment — authorised
+              VCB, Transformer & Compact Substation equipment. Authorised
               dealer of HUCEEN.
             </p>
           </div>
@@ -52,9 +53,17 @@ export default function Footer() {
           <div>
             <h2 className="eyebrow">Contact</h2>
             <ul className="mt-5 space-y-4 text-sm text-muted">
-              <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-blue" aria-hidden />
-                Valsad, Gujarat, India
+              <li>
+                <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 transition-colors hover:text-green">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-blue" aria-hidden />
+                  <address className="not-italic leading-relaxed">
+                    {ADDRESS_LINES.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </address>
+                </a>
               </li>
               <li>
                 <a href="tel:+919824444496" className="flex items-center gap-3 transition-colors hover:text-green">

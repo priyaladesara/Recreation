@@ -114,7 +114,7 @@ export const products: Product[] = [
     category: "Power Equipment",
     tagline: "Packaged substation solutions, ready to install",
     description:
-      "Compact, factory-assembled substation packages combining transformer, switchgear, and protection in a single enclosure — supplied and installed for industrial, commercial, and infrastructure projects where space is limited.",
+      "Compact, factory-assembled substation packages combining transformer, switchgear, and protection in a single enclosure, supplied and installed for industrial, commercial, and infrastructure projects where space is limited.",
     image: "/products/compact-substation.png",
     specs: [
       { label: "Rated Voltage", value: "11 – 33 kV" },

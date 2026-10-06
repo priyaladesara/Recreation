@@ -19,7 +19,7 @@ export default function ProductsPage() {
             Equipment built for <span className="text-gradient">every voltage level</span>
           </>
         }
-        intro="From high voltage switchgear to power quality systems — supplied, installed, and supported by a licensed electrical contracting team."
+        intro="From high voltage switchgear to power quality systems. Supplied, installed, and supported by a licensed electrical contracting team."
       />
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">

@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Recreation | Electrical Contractor & HUCEEN Authorised Dealer",
   description:
-    "Recreation is a government licensed electrical contractor and supplier of RMU, VCB, Transformer, and Compact Substation equipment, and an authorised dealer of HUCEEN, based in Valsad, Gujarat.",
+    "Recreation is a government licensed electrical contractor and supplier of RMU, VCB, Transformer, and Compact Substation equipment, and an authorised dealer of HUCEEN, based in Vapi, Gujarat.",
 };
 
 export const viewport: Viewport = {

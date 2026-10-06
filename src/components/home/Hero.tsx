@@ -37,7 +37,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full rounded-full bg-green animate-[ping-soft_2s_ease-out_infinite]" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-green" />
             </span>
-            Valsad, Gujarat · Est. 2010
+            Vapi, Gujarat · Est. 2010
           </p>
 
           <h1 className="font-display mt-6 text-[clamp(2.5rem,5vw,4.25rem)] font-bold uppercase leading-[0.98] tracking-[-0.01em] text-foreground">
@@ -55,7 +55,7 @@ export default function Hero() {
           <p className="rise mt-7 max-w-xl text-lg leading-relaxed text-muted" style={{ "--d": "0.3s" } as React.CSSProperties}>
             Recreation is a government licensed electrical contractor and
             supplier of RMU, VCB, Transformer, and Compact Substation
-            equipment — and an authorised dealer of HUCEEN. From
+            equipment, and an authorised dealer of HUCEEN. From
             specification to installation and after-sales support, we keep
             your power infrastructure running.
           </p>

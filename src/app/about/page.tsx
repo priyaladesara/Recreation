@@ -21,7 +21,7 @@ const values = [
   {
     icon: Eye,
     title: "Our Vision",
-    desc: "To be a trusted electrical contracting partner across every stage — from specification to after-sales support.",
+    desc: "To be a trusted electrical contracting partner across every stage, from specification to after-sales support.",
   },
   {
     icon: HeartHandshake,
@@ -35,7 +35,7 @@ const timeline = [
   { year: "Government License", desc: "Recreation holds a government electrical license to carry out contracting work." },
   { year: "HUCEEN Dealership", desc: "Authorised as a dealer for HUCEEN, giving direct access to genuine equipment and manufacturer support." },
   { year: "Product Range", desc: "Supplying RMU, VCB, Transformer, and Compact Substation equipment for industrial and infrastructure projects." },
-  { year: "Today", desc: "Based in Valsad, Gujarat, serving customers with supply, installation, and after-sales support." },
+  { year: "Today", desc: "Based in Vapi, Gujarat, serving customers with supply, installation, and after-sales support." },
 ];
 
 export default function AboutPage() {
@@ -48,7 +48,7 @@ export default function AboutPage() {
             A licensed contractor <span className="text-gradient">you can rely on</span>
           </>
         }
-        intro="Founded in 2010 by Ritesh Patel, Recreation is a government licensed electrical contractor and supplier of RMU, VCB, Transformer, and Compact Substation equipment — and an authorised dealer of HUCEEN, based in Valsad, Gujarat."
+        intro="Founded in 2010 by Ritesh Patel, Recreation is a government licensed electrical contractor and supplier of RMU, VCB, Transformer, and Compact Substation equipment, and an authorised dealer of HUCEEN, based in Vapi, Gujarat."
       />
 
       <Credentials />

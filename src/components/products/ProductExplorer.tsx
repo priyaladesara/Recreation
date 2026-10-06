@@ -67,7 +67,7 @@ export default function ProductExplorer() {
                       Need a rating that isn&apos;t listed?
                     </span>
                     <span className="mt-3 block text-sm leading-relaxed text-muted">
-                      Share your load and voltage — we&apos;ll specify the right equipment.
+                      Share your load and voltage and we&apos;ll specify the right equipment.
                     </span>
                   </span>
                   <span className="flex items-center gap-2 text-sm font-semibold text-green">

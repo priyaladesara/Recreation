@@ -5,6 +5,7 @@ import Panel from "@/components/ui/Panel";
 import ContactForm from "@/components/contact/ContactForm";
 import PageHeader from "@/components/layout/PageHeader";
 import { whatsappQuoteUrl } from "@/lib/whatsapp";
+import { ADDRESS_LINES, MAPS_URL } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Contact | Recreation",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const details = [
-  { icon: MapPin, label: "Address", value: "Valsad, Gujarat, India" },
+  { icon: MapPin, label: "Address", value: ADDRESS_LINES, href: MAPS_URL },
   { icon: Phone, label: "Phone", value: "+91 98244 44496", href: "tel:+919824444496" },
   { icon: Mail, label: "Email", value: "sales@recreationindia.com", href: "mailto:sales@recreationindia.com" },
 ];
@@ -41,15 +42,25 @@ export default function ContactPage() {
                 </span>
                 <div>
                   <p className="font-mono-hud text-[11px] uppercase tracking-wider text-muted">{item.label}</p>
-                  <p className="mt-1 font-medium text-foreground">
-                    {item.href ? (
-                      <a href={item.href} className="transition-colors hover:text-green">
-                        {item.value}
-                      </a>
-                    ) : (
-                      item.value
-                    )}
-                  </p>
+                  <div className="mt-1 font-medium leading-relaxed text-foreground">
+                    <a
+                      href={item.href}
+                      {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="transition-colors hover:text-green"
+                    >
+                      {Array.isArray(item.value) ? (
+                        <address className="not-italic">
+                          {item.value.map((line) => (
+                            <span key={line} className="block">
+                              {line}
+                            </span>
+                          ))}
+                        </address>
+                      ) : (
+                        item.value
+                      )}
+                    </a>
+                  </div>
                 </div>
               </Panel>
             ))}
